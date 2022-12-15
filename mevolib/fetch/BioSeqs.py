@@ -525,3 +525,21 @@ class BioSeqs:
         min_value = numpy.amin(seqs_length)
         max_value = numpy.amax(seqs_length)
         return (len(self), mean_value, std_value, min_value, max_value)
+
+
+def call_fetch_gb_seqs():
+    """docstring"""
+    seq_db = BioSeqs.from_entrez(
+        email="ex@ucm.es",
+        entrez_db="nuccore",
+        max_fetch=3,
+        query='("Ixodes"[Organism] OR ixodes[All Fields]) AND (biomol_genomic[PROP] AND refseq[filter])',
+    )
+    print(seq_db.statistics())
+    seq_db.write("ejemplo.gb")
+
+
+def main():
+    """Default call for BioSeqs module."""
+    # argparse...
+    call_fetch_gb_seqs()
